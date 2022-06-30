@@ -23,9 +23,10 @@ const cardImages = [
 
 export function App() {
   const [cards, setCards] = useState<CardProps[]>([])
-  const [turns, setTurns] = useState(0)
   const [choiceOne, setChoiceOne] = useState<CardProps | null>(null)
   const [choiceTwo, setChoiceTwo] = useState<CardProps | null>(null)
+  const [disabled, setDisabled] = useState(false)
+  const [turns, setTurns] = useState(0)
 
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
@@ -39,6 +40,7 @@ export function App() {
     setChoiceOne(null)
     setChoiceTwo(null)
     setTurns((prev) => prev + 1)
+    setDisabled(false)
   }, [])
 
   const handleChoice = (card: CardProps) => {
@@ -47,6 +49,8 @@ export function App() {
 
   useEffect(() => {
     if (choiceOne && choiceTwo) {
+      setDisabled(true)
+
       if (choiceOne.src === choiceTwo.src) {
         setCards((prev) =>
           prev.map((card) =>
@@ -73,6 +77,7 @@ export function App() {
             card={card}
             onChoice={handleChoice}
             flipped={card === choiceOne || card === choiceTwo || card.matched}
+            disabled={disabled}
           />
         ))}
       </div>

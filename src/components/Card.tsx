@@ -11,12 +11,13 @@ export type CardProps = {
 type Props = {
   card: CardProps
   flipped: boolean
+  disabled: boolean
   onChoice: (card: CardProps) => void
 }
 
-export const Card = ({ card, flipped, onChoice }: Props) => {
+export const Card = ({ card, flipped, disabled, onChoice }: Props) => {
   const handleClick = () => {
-    onChoice(card)
+    !disabled && onChoice(card)
   }
 
   return (
