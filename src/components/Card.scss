@@ -2,7 +2,9 @@
   position: relative;
 
   img {
-    width: 100%;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
     display: block;
     border: 2px solid var(--white);
     border-radius: 8px;

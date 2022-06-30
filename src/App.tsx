@@ -32,8 +32,13 @@ export function App() {
     const shuffledCards = [...cardImages, ...cardImages]
       .sort(() => Math.random() - 0.5)
       .map((card, index) => ({ ...card, id: index }))
-    setCards(shuffledCards)
+
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setCards((prev) => prev.map((card) => ({ ...card, matched: false })))
     setTurns(0)
+
+    setTimeout(() => setCards(shuffledCards), 500)
   }
 
   const resetTurns = useCallback(() => {
@@ -65,6 +70,10 @@ export function App() {
     }
   }, [choiceOne, choiceTwo, resetTurns])
 
+  useEffect(() => {
+    shuffleCards()
+  }, [])
+
   return (
     <div className="App">
       <h1>Magic Memory</h1>
@@ -81,6 +90,8 @@ export function App() {
           />
         ))}
       </div>
+
+      <p className="turns">Turns: {turns}</p>
     </div>
   )
 }
