@@ -68,7 +68,12 @@ export function App() {
 
       <div className="card-grid">
         {cards.map((card) => (
-          <Card key={card.id} card={card} onChoice={handleChoice} />
+          <Card
+            key={card.id}
+            card={card}
+            onChoice={handleChoice}
+            flipped={card === choiceOne || card === choiceTwo || card.matched}
+          />
         ))}
       </div>
     </div>
