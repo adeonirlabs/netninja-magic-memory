@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 
 import helmet from '~/assets/helmet.png'
 import potion from '~/assets/potion.png'
@@ -13,17 +13,19 @@ import type { CardProps } from '~/components/Card'
 import './App.scss'
 
 const cardImages = [
-  { src: helmet },
-  { src: potion },
-  { src: ring },
-  { src: scroll },
-  { src: shield },
-  { src: sword },
+  { src: helmet, matched: false },
+  { src: potion, matched: false },
+  { src: ring, matched: false },
+  { src: scroll, matched: false },
+  { src: shield, matched: false },
+  { src: sword, matched: false },
 ]
 
 export function App() {
   const [cards, setCards] = useState<CardProps[]>([])
   const [turns, setTurns] = useState(0)
+  const [choiceOne, setChoiceOne] = useState<CardProps | null>(null)
+  const [choiceTwo, setChoiceTwo] = useState<CardProps | null>(null)
 
   const shuffleCards = () => {
     const shuffledCards = [...cardImages, ...cardImages]
@@ -33,8 +35,31 @@ export function App() {
     setTurns(0)
   }
 
-  console.log(cards)
-  console.log(turns)
+  const resetTurns = useCallback(() => {
+    setChoiceOne(null)
+    setChoiceTwo(null)
+    setTurns((prev) => prev + 1)
+  }, [])
+
+  const handleChoice = (card: CardProps) => {
+    choiceOne ? setChoiceTwo(card) : setChoiceOne(card)
+  }
+
+  useEffect(() => {
+    if (choiceOne && choiceTwo) {
+      if (choiceOne.src === choiceTwo.src) {
+        setCards((prev) =>
+          prev.map((card) =>
+            card.src === choiceOne.src ? { ...card, matched: true } : card
+          )
+        )
+
+        resetTurns()
+      } else {
+        setTimeout(() => resetTurns(), 500)
+      }
+    }
+  }, [choiceOne, choiceTwo, resetTurns])
 
   return (
     <div className="App">
@@ -43,7 +68,7 @@ export function App() {
 
       <div className="card-grid">
         {cards.map((card) => (
-          <Card key={card.id} card={card} />
+          <Card key={card.id} card={card} onChoice={handleChoice} />
         ))}
       </div>
     </div>
