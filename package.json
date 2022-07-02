@@ -1,12 +1,12 @@
 {
-  "name": "boilerplate-react-vite",
-  "description": "A React boilerplate powered by Vite builder",
+  "name": "magic-memory",
+  "description": "A simple project to build a memory game",
   "version": "1.0.0",
   "author": "Adeonir Kohl",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/adeonir/boilerplate-react-vite.git"
+    "url": "git+https://github.com/adeonirlabs/netninja-magic-memory.git"
   },
   "scripts": {
     "dev": "vite",
