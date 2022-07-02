@@ -1,7 +1,7 @@
-# Tripago
+# Magic Memory
 
 A simple project to build a memory game.
 
 ---
 
-> Fetching Data & useEffect from The Net Ninja course
+> Managing states and passing data between components from The Net Ninja Couses
